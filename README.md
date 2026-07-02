@@ -18,7 +18,7 @@ Il progetto consiste in un'applicazione software per l'analisi e il monitoraggio
 - [5. Struttura dei File e Avvio](#5-struttura-dei-file-e-avvio)
   - [5.1 Albero del Progetto](#51-albero-del-progetto)
   - [5.2 Requisiti di Sistema](#52-requisiti-di-sistema)
-  - [5.3 Istruzioni per l'Avvio](#53-istruzioni-per-l'-avvio)
+  - [5.3 Istruzioni per l'Avvio](#53-istruzioni-per-l-avvio)
 
 ## 1. Introduzione e Obiettivi del Progetto
 La scelta di sviluppare un'applicazione per il monitoraggio delle nascite nel territorio italiano deriva dalla registrazione di un'importante calo delle nascite annue nel nostro Paese negli ultimi cinque anni, denominato inverno demografico e che va quindi avanti dal 2021 fino ad oggi. (Proprio per questo motivo il range temporale scelto dalle analisi mostrate dai grafici va dal 2021 al 2026.)
