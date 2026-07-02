@@ -18,8 +18,9 @@ Il progetto consiste in un'applicazione software per l'analisi e il monitoraggio
 - [5. Struttura dei File e Avvio](#5-struttura-dei-file-e-avvio)
 
 ## 1. Introduzione e Obiettivi del Progetto
+La scelta di sviluppare un'applicazione per il monitoraggio delle nascite nel territorio italiano deriva dalla registrazione di un'importante calo delle nascite annue nel nostro Paese negli ultimi cinque anni. Proprio per questo motivo il range temporale scelto dalle analisi mostrate dai grafici va dal 2021 al 2026.
 
-Il presente elaborato progettuale risponde alla necessità clinica e manageriale di centralizzare, storicizzare e analizzare i flussi di dati legati agli eventi di nascita e alla salute perinatale (*perinatal care*). 
+È in oltre chiaro che presente elaborato progettuale risponda anche alla necessità clinica e manageriale di centralizzare, storicizzare e analizzare i flussi di dati legati agli eventi di nascita e alla salute perinatale (*perinatal care*). 
 
 Nel contesto sanitario moderno, la transizione dalle cartelle cliniche cartacee o dai fogli di calcolo isolati a sistemi informativi ospedalieri integrati è fondamentale per ridurre gli errori medici, garantire la continuità delle cure e permettere studi epidemiologici accurati sulla salute della madre e del neonato.
 
@@ -207,7 +208,13 @@ run('generofogli.m')
 ```
 Al termine dell'esecuzione, all'interno della cartella comparirà il file natal_mat.db contenente le tabelle normalizzate e collegate tramite chiavi primarie ed esterne.
 
-Fase 2: Apertura della Dashboard Grafica
-Una volta che il database è pronto e popolato, è possibile lanciare l'applicazione:
+- **Fase 2: Apertura della Dashboard Grafica**
 
-Nella Command Window di MATLAB, digitare ed eseguire:
+Una volta che il database è pronto e popolato, è possibile lanciare l'applicazione. 
+- Nella Command Window di MATLAB, digitare ed eseguire:
+```text
+natal_mat_app
+```
+(In alternativa, fare doppio clic sul file natal_mat_app.m nel pannello "Current Folder" di MATLAB e cliccare sul pulsante verde Run in alto).
+
+Si aprirà la finestra della dashboard e sarà possibile interagire con i menu a tendina per filtrare i dati clinici per Anno e Regione e osservare l'aggiornamento reattivo dei grafici epidemiologici e dei KPI delle pazienti.

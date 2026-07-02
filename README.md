@@ -18,8 +18,9 @@ Il progetto consiste in un'applicazione software per l'analisi e il monitoraggio
 - [5. Struttura dei File e Avvio](#5-struttura-dei-file-e-avvio)
 
 ## 1. Introduzione e Obiettivi del Progetto
+La scelta di sviluppare un'applicazione per il monitoraggio delle nascite nel territorio italiano deriva dalla registrazione di un'importante calo delle nascite annue nel nostro Paese negli ultimi cinque anni, denominato inverno demografico e che va quindi avanti dal 2021 fino ad oggi. (Proprio per questo motivo il range temporale scelto dalle analisi mostrate dai grafici va dal 2021 al 2026.)
 
-Il presente elaborato progettuale risponde alla necessità clinica e manageriale di centralizzare, storicizzare e analizzare i flussi di dati legati agli eventi di nascita e alla salute perinatale (*perinatal care*). 
+È in oltre chiaro che il presente elaborato progettuale risponda anche alla necessità clinica e manageriale di centralizzare, storicizzare e analizzare i flussi di dati legati agli eventi di nascita e alla salute perinatale (*perinatal care*). 
 
 Nel contesto sanitario moderno, la transizione dalle cartelle cliniche cartacee o dai fogli di calcolo isolati a sistemi informativi ospedalieri integrati è fondamentale per ridurre gli errori medici, garantire la continuità delle cure e permettere studi epidemiologici accurati sulla salute della madre e del neonato.
 
