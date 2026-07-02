@@ -74,3 +74,92 @@ Il backend del software in MATLAB è strettamente disaccoppiato dalla UI ed eseg
 1. **Interfaccia SQL Nativa:** All'avvio o alla modifica dei filtri, l'app si connette al database SQLite tramite i comandi nativi di MATLAB, esegue query di aggregazione e aggiorna i componenti grafici in modo reattivo.
 2. **Architettura basata su Callback:** Ogni interazione dell'utente sui controlli grafici attiva una funzione di callback dedicata che ricalcola istantaneamente le metriche visualizzate, garantendo la coerenza del dato senza necessità di riavviare l'applicazione.
 3. **Integrità dei Dati:** I dati provenienti dai fogli di calcolo originali (`.csv`) vengono ripuliti (es. gestione degli apici nelle stringhe SQL) prima di essere storicizzati nel database relazionale, garantendo l'assenza di record corrotti nella UI.
+
+## Modellazione dei Dati (Database Relazionale)
+
+Per garantire la coerenza, l'integrità referenziale e l'assenza di ridondanza informativa, i dati clinici sono stati organizzati in un database relazionale locale (SQLite) progettato in **Terza Forma Normale (3FN)**. Questa struttura permette di separare nettamente l'anagrafica immutabile della paziente dagli eventi clinici (i parti) e dalle diagnosi neonatali.
+
+### Diagramma Entità-Relazione (ER)
+Il flusso logico dei dati e i vincoli di integrità del database sono rappresentati nel seguente diagramma:
+
+```mermaid
+erDiagram
+    PAZIENTI ||--o{ EVENTI_NASCITA : "effettua"
+    EVENTI_NASCITA ||--o{ COMPLICANZE_NEONATALI : "genera"
+
+    PAZIENTI {
+        int ID_Paziente PK
+        string Regione
+        int Eta_Madre
+        string Cittadinanza
+    }
+
+    EVENTI_NASCITA {
+        int ID_Evento PK
+        int ID_Paziente FK
+        int Anno_Evento
+        int Mese_Evento
+        int Peso_Neonato_Grammi
+        int Eta_Gestazionale_Settimane
+        int Apgar_1Min
+        int Apgar_5Min
+        string Sesso_Neonato
+    }
+
+    COMPLICANZE_NEONATALI {
+        int ID_Complicanza PK
+        int ID_Evento FK
+        string Tipo_Patologia
+    }
+
+
+```
+### Tabella 1: PAZIENTI
+Contiene i dati anagrafici e il baseline demografico delle madri. Le informazioni rimangono stabili nel tempo e non vengono duplicate in caso di parti multipli della stessa donna.
+
+- **ID_Paziente (INTEGER, Chiave Primaria, Autoincrement):** Identificativo univoco della paziente.
+
+- **Regione (TEXT):** Regione di provenienza della madre per l'analisi epidemiologica territoriale.
+
+- **Eta_Madre (INTEGER):** Età al momento del primo accesso/censimento.
+
+- **Cittadinanza (TEXT):** Stato di cittadinanza della paziente (es. Italiana/Straniera).
+
+### Tabella 2: EVENTI_NASCITA
+Rappresenta il nucleo della storicizzazione longitudinale. Ogni record corrisponde a un singolo parto avvenuto nella struttura clinica ed è associato in modo univoco a una madre.
+
+- **ID_Evento (INTEGER, Chiave Primaria, Autoincrement):** Identificativo univoco del parto.
+
+- **ID_Paziente (INTEGER, Chiave Esterna):** Punta a PAZIENTI(ID_Paziente). Garantisce che nessun parto venga inserito senza una madre censita.
+
+- **Anno_Evento / Mese_Evento (INTEGER):** Campi temporali usati dall'app per l'analisi della stagionalità dei ricoveri.
+
+- **Peso_Neonato_Grammi (INTEGER):** Peso alla nascita, parametro critico per valutare la restrizione della crescita fetale.
+
+- **Eta_Gestazionale_Settimane (INTEGER):** Settimane di gestazione (es. <37 settimane indica un parto pretermine).
+
+- **Apgar_1Min / Apgar_5Min (INTEGER):** Punteggi di vitalità neonatale (range 0-10) registrati a uno e cinque minuti dal parto.
+
+- **Sesso_Neonato (TEXT):** Genere del nascituro.
+
+### Tabella 3: COMPLICANZE_NEONATALI
+Tabella di lookup utilizzata per censire le patologie insorte nel neonato. È scorrelata dall'anagrafica della madre per permettere l'inserimento di più patologie diverse per lo stesso neonato (evitando campi vuoti o stringhe concatenate).
+
+- **ID_Complicanza (INTEGER, Chiave Primaria, Autoincrement):** Identificativo della singola diagnosi.
+
+- **ID_Evento (INTEGER, Chiave Esterna)**: Punta a EVENTI_NASCITA(ID_Evento).
+
+- **Tipo_Patologia (TEXT):** Codifica della complicanza riscontrata (es. Ittero, Distress Respiratorio, Asfissia Perinatale).
+
+**Analisi della Cardinalità delle Relazioni**
+PAZIENTI (1) ─── (N) EVENTI_NASCITA
+
+Cardinalità: Uno a Molti.
+
+Logica Clinica: Una madre può recarsi in ospedale nel corso della sua vita fertile per effettuare più parti (storicizzazione dei parti storici o gravidanze successive). Al contrario, ogni specifico evento di nascita registrato nel database può essere ricondotto a una e una sola madre.
+
+EVENTI_NASCITA (1) ─── (N) COMPLICANZE_NEONATALI
+
+Cardinalità: Uno a Molti (Zero a Molti).
+
+Logica Clinica: Un parto può decorrere in modo perfetto senza alcuna complicazione per il neonato (zero record associati), oppure il neonato può presentare una o più patologie concomitanti che richiedono diagnosi separate (es. un neonato prematuro con ittero e distress respiratorio genererà due record distinti). Ogni record di complicanza appartiene però esclusivamente a quel singolo evento di nascita.
