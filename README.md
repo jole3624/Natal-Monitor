@@ -83,6 +83,9 @@ Il backend del software in MATLAB è strettamente disaccoppiato dalla UI ed eseg
 
 Per garantire la coerenza, l'integrità referenziale e l'assenza di ridondanza informativa, i dati clinici sono stati organizzati in un database relazionale locale (SQLite) progettato in **Terza Forma Normale (3FN)**. Questa struttura permette di separare nettamente l'anagrafica immutabile della paziente dagli eventi clinici (i parti) e dalle diagnosi neonatali.
 
+![Diagramma Entità-Relazione del Progetto](diagramma_er.png)
+
+
 ### 4.1 Diagramma Entità-Relazione (ER)
 Il flusso logico dei dati e i vincoli di integrità del database sono rappresentati nel seguente diagramma:
 
