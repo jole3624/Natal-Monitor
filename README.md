@@ -91,8 +91,8 @@ Il flusso logico dei dati e i vincoli di integrità del database sono rappresent
 
 ```mermaid
 erDiagram
-    PAZIENTI ||--o{ EVENTI_NASCITA : "effettua"
-    EVENTI_NASCITA ||--o{ COMPLICANZE_NEONATALI : "genera"
+    PAZIENTI ||--o{ EVENTI : "effettua"
+    EVENTI ||--o{ DIAGNOSI : "genera"
 
     PAZIENTI {
         int ID_Paziente PK
