@@ -134,10 +134,10 @@ Contiene i dati anagrafici e il baseline demografico delle madri. Le informazion
 
 - **Cittadinanza (TEXT):** Stato di cittadinanza della paziente (es. Italiana/Straniera).
 
-### Tabella 2: EVENTI_NASCITA
+### Tabella 2: EVENTI
 Rappresenta il nucleo della storicizzazione longitudinale. Ogni record corrisponde a un singolo parto avvenuto nella struttura clinica ed è associato in modo univoco a una madre.
 
-- **ID_Evento (INTEGER, Chiave Primaria, Autoincrement):** Identificativo univoco del parto.
+- **ID_Parto (INTEGER, Chiave Primaria, Autoincrement):** Identificativo univoco del parto.
 
 - **ID_Paziente (INTEGER, Chiave Esterna):** Punta a PAZIENTI(ID_Paziente). Garantisce che nessun parto venga inserito senza una madre censita.
 
@@ -145,30 +145,30 @@ Rappresenta il nucleo della storicizzazione longitudinale. Ogni record corrispon
 
 - **Peso_Neonato_Grammi (INTEGER):** Peso alla nascita, parametro critico per valutare la restrizione della crescita fetale.
 
-- **Eta_Gestazionale_Settimane (INTEGER):** Settimane di gestazione (es. <37 settimane indica un parto pretermine).
+- **Settimane_Gestazione (INTEGER):** Settimane di gestazione (es. <37 settimane indica un parto pretermine).
 
-- **Apgar_1Min / Apgar_5Min (INTEGER):** Punteggi di vitalità neonatale (range 0-10) registrati a uno e cinque minuti dal parto.
+- **Apgar (1Min / 5Min) (INTEGER):** Punteggi di vitalità neonatale (range 0-10) registrati a uno e cinque minuti dal parto.
 
-- **Sesso_Neonato (TEXT):** Genere del nascituro.
+- **Sesso (TEXT):** Genere del nascituro.
 
-### Tabella 3: COMPLICANZE_NEONATALI
+### Tabella 3: DIAGNOSI
 Tabella di lookup utilizzata per censire le patologie insorte nel neonato. È scorrelata dall'anagrafica della madre per permettere l'inserimento di più patologie diverse per lo stesso neonato (evitando campi vuoti o stringhe concatenate).
 
-- **ID_Complicanza (INTEGER, Chiave Primaria, Autoincrement):** Identificativo della singola diagnosi.
+- **ID_Diagnosi (INTEGER, Chiave Primaria, Autoincrement):** Identificativo della singola diagnosi.
 
-- **ID_Evento (INTEGER, Chiave Esterna)**: Punta a EVENTI_NASCITA(ID_Evento).
+- **ID_Parto (INTEGER, Chiave Esterna)**: Punta a EVENTI(ID_Parto).
 
 - **Tipo_Patologia (TEXT):** Codifica della complicanza riscontrata (es. Ittero, Distress Respiratorio, Asfissia Perinatale).
 
 ### **Analisi della Cardinalità delle Relazioni**
 
-- **PAZIENTI (1) ─── (N) EVENTI_NASCITA**
+- **PAZIENTI (1) ─── (N) EVENTI**
 
 Cardinalità: Uno a Molti.
 
 Logica Clinica: Una madre può recarsi in ospedale nel corso della sua vita fertile per effettuare più parti (storicizzazione dei parti storici o gravidanze successive). Al contrario, ogni specifico evento di nascita registrato nel database può essere ricondotto a una e una sola madre.
 
-- **EVENTI_NASCITA (1) ─── (N) COMPLICANZE_NEONATALI**
+- **EVENTI (1) ─── (N) DIAGNOSI**
 
 Cardinalità: Uno a Molti (Zero a Molti).
 
