@@ -101,22 +101,22 @@ erDiagram
         string Cittadinanza
     }
 
-    EVENTI_NASCITA {
-        int ID_Evento PK
+    EVENTI {
+        int ID_Parto PK
         int ID_Paziente FK
-        int Anno_Evento
-        int Mese_Evento
         int Peso_Neonato_Grammi
-        int Eta_Gestazionale_Settimane
-        int Apgar_1Min
-        int Apgar_5Min
-        string Sesso_Neonato
+        int Settimane_Gestazione
+        int Apgar
+        int Data_Parto
+        int Anno_Parto
+        int Mese_Parto
+        string Sesso
     }
 
-    COMPLICANZE_NEONATALI {
-        int ID_Complicanza PK
-        int ID_Evento FK
-        string Tipo_Patologia
+    DIAGNOSI {
+        int ID_Diagnosi PK
+        int ID_Parto FK
+        string Patologia
     }
 
 
