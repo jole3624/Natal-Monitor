@@ -230,6 +230,6 @@ Si aprirà la finestra della dashboard e sarà possibile interagire con i menu a
 
 Ecco la presentazione del progetto:
 
-<iframe src="https://1drv.ms/p/c/52f014611d2bece0/IQRq5FCDNu-AQr2qxFsjwQaJAQMpiGnv27PVd9k8ZyaW5JE?em=2&amp;wdAr=1.7777777777777777&amp;wdEaaCheck=1" width="476px" height="288px" frameborder="0" title="Visualizzatore di PowerPoint">Si tratta di un <a target="_blank" href="https://office.com">Microsoft Office</a> incorporato presentazione, basato su <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+[![Apri la presentazione di PowerPoint](./copertina.png)](https://1drv.ms/p/c/52f014611d2bece0/IQRq5FCDNu-AQr2qxFsjwQaJAQMpiGnv27PVd9k8ZyaW5JE)
 
 
